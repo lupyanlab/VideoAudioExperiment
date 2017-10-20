@@ -8,6 +8,30 @@ const _ = require('lodash');
 const bodyParser = require('body-parser');
 const csv = require('csvtojson');
 
+let images = {};
+let categories = [];
+
+// include all images recursively in 17-objects directory
+fs.readdirSync('dev/17-objects').forEach(folder => {
+  if (folder != '.DS_Store') {
+    categories.push(folder);
+    images[folder] = [];
+    fs.readdirSync('dev/17-objects/'+folder).forEach(file => {
+      if (file == 'TestItems') {
+        fs.readdirSync('dev/17-objects/'+folder+'/TestItems').forEach(file => {     
+          if (!['.DS_Store', 'Thumbs.db'].includes(file)) {
+            images[folder].push('17-objects/'+folder+'/TestItems/'+file);
+          }
+        });
+      }
+      if (!['.DS_Store', 'TestItems', 'Thumbs.db'].includes(file)) {
+        // console.log('dev/17-objects/'+folder+'/'+file)
+        images[folder].push('17-objects/'+folder+'/'+file);
+      }
+    })
+  }
+})
+
 let app = express();
 let writer = csvWriter({sendHeaders: false});
 
@@ -41,30 +65,13 @@ app.post('/trials', function (req, res) {
   console.log("trials post request received");
   let subjCode = req.body.subjCode;
   console.log("subjCode received is " + subjCode);
-
-  // Runs genTrial python script with subjCode arg
-  PythonShell.defaultOptions = { args: [subjCode] };
-  PythonShell.run('generateTrials.py', function (err, results) {
-    if (err) throw err;
-    let trials = [];
-
-    // Reads generated trial csv file
-    csv()
-    .fromFile('trials/'+subjCode+'_trials.csv')
-    // Push all trials to array
-    .on('json',(jsonObj)=>{
-      trials.push(jsonObj);
-    })
-    // Send trials array when finished
-    .on('done',(error)=>{
-      if (error) {
-        res.send({success: false});
-        throw error;
-      }
-      res.send({success: true, trials: trials});
-      console.log('finished parsing csv')
-    })
-  });
+  let subjCategories = _.shuffle(categories);
+  let subjImages = Object.assign({}, images); 
+  for (let category in subjImages) {
+    subjImages[category] = _.shuffle(subjImages[category]);
+  };
+  let trials = {categories: subjCategories, images: subjImages};
+  res.send({success: true, trials: trials});
 })
 
 // POST endpoint for receiving trial responses
