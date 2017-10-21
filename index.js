@@ -8,30 +8,6 @@ const _ = require('lodash');
 const bodyParser = require('body-parser');
 const csv = require('csvtojson');
 
-let images = {};
-let categories = [];
-
-// include all images recursively in 17-objects directory
-fs.readdirSync('dev/17-objects').forEach(folder => {
-  if (folder != '.DS_Store') {
-    categories.push(folder);
-    images[folder] = [];
-    fs.readdirSync('dev/17-objects/'+folder).forEach(file => {
-      if (file == 'TestItems') {
-        fs.readdirSync('dev/17-objects/'+folder+'/TestItems').forEach(file => {     
-          if (!['.DS_Store', 'Thumbs.db', 'extra','AMC5143AAS_COB_370.jpe'].includes(file)) {
-            images[folder].push('17-objects/'+folder+'/TestItems/'+file);
-          }
-        });
-      }
-      if (!['.DS_Store', 'TestItems', 'Thumbs.db', 'extra','AMC5143AAS_COB_370.jpe'].includes(file)) {
-        // console.log('dev/17-objects/'+folder+'/'+file)
-        images[folder].push('17-objects/'+folder+'/'+file);
-      }
-    })
-  }
-})
-
 let app = express();
 let writer = csvWriter({sendHeaders: false});
 
@@ -62,6 +38,30 @@ app.listen(app.get('port'), function () {
 
 // POST endpoint for requesting trials
 app.post('/trials', function (req, res) {
+  
+  let images = {};
+  let categories = [];
+
+  // include all images recursively in 17-objects directory
+  fs.readdirSync('dev/17-objects').forEach(folder => {
+    if (folder != '.DS_Store') {
+      categories.push(folder);
+      images[folder] = [];
+      fs.readdirSync('dev/17-objects/'+folder).forEach(file => {
+        if (file == 'TestItems') {
+          fs.readdirSync('dev/17-objects/'+folder+'/TestItems').forEach(file => {     
+            if (!['.DS_Store', 'Thumbs.db', 'extra','AMC5143AAS_COB_370.jpe'].includes(file)) {
+              images[folder].push('17-objects/'+folder+'/TestItems/'+file);
+            }
+          });
+        }
+        if (!['.DS_Store', 'TestItems', 'Thumbs.db', 'extra','AMC5143AAS_COB_370.jpe'].includes(file)) {
+          // console.log('dev/17-objects/'+folder+'/'+file)
+          images[folder].push('17-objects/'+folder+'/'+file);
+        }
+      })
+    }
+  })
   console.log("trials post request received");
   let subjCode = req.body.subjCode;
   console.log("subjCode received is " + subjCode);
@@ -73,6 +73,12 @@ app.post('/trials', function (req, res) {
   let trials = {categories: subjCategories, images: subjImages};
   res.send({success: true, trials: trials});
 })
+
+app.post('/questions', function(req, res) {
+  let path = 'IRQ_questions.txt';
+  let questions = _.shuffle(fs.readFileSync(path).toString().split('\n'));
+  res.send({success: true, questions: questions});
+});
 
 // POST endpoint for receiving trial responses
 app.post('/data', function (req, res) {
