@@ -42,11 +42,11 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     timeline.push(instructions);
 
     let trial_number = 1;
-    let images = [];
-    let num_trials = trials.length;
+    let num_trials = trials.categories.length;
+    document.trials = trials;
 
     // Pushes each audio trial to timeline
-    _.forEach(trials, (trial) => {
+    for (let category of trials.categories) {
 
         
         // Empty Response Data to be sent to be collected
@@ -55,17 +55,19 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
             workerId: workerId,
             assignmentId: assignmentId,
             hitId: hitId,
-            word1: trial.word1,
-            word2: trial.word2,
-            country1: trial.country1 || 'unspecified',
-            country2: trial.country2 || 'unspecified',
+            category: category,
             expTimer : -1,
             response: -1,
             trial_number: trial_number,
             rt: -1,
         }	
 
-        let stimulus = `
+        let imagesHTML = '';
+        for (let img of trials.images[category]) {
+            imagesHTML += `<img src="${img}" style="max-width:16%;"/>`
+        }
+
+        let preamble = `
         <canvas width="800px" height="25px" id="bar"></canvas>
         <script>
             var barCanvas = document.getElementById('bar');
@@ -74,35 +76,23 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
             barCtx.roundRect(0, 0, barCanvas.width*${trial_number/num_trials}, barCanvas.height, 20).fill();
         </script>
         <h5 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h5>
-        <div style="clear: both;top:25%;width:100%;position: absolute;">
-            <h1 style="text-align:center;float:left;width:50%;">${trial.word1}</h1>
-            <h1 style="text-align:center;float:right;width:50%;">${trial.word2}</h1>
-        </div>
-        `;
+        `+imagesHTML;
+        // <div style="clear: both;top:25%;width:100%;position: absolute;">
+        //     <h1 style="text-align:center;float:left;width:50%;">${trial.word1}</h1>
+        //     <h1 style="text-align:center;float:right;width:50%;">${trial.word2}</h1>
+        // </div>
 
-        let prompt = `
-        <div style="position:absolute;bottom:20%;width:100%;">
-        <h2 style="text-align:center;line-height:1.5;">How similar are these two words?</h2>
-            <div id="container">
-                <img id="scale" src="img/scale.jpg" width="100%" />
-                <canvas id="canvas" width="800px" height="138.97px"></canvas>
-            </div>
-        </div>
-        <script src="circles.js"></script>
-        `;
+        let questions = ['What are these items called?'];
 
         // Picture Trial
         let wordTrial = {
-            type: 'single-stim',
-            is_html: true,
-            choices: ['1', '2', '3', '4', '5', '6', '7'],
-
-            stimulus: stimulus,
-
-            prompt: prompt,
+            type: 'survey-text',
+            preamble: preamble,
+            questions: questions,
 
             on_finish: function (data) {
-                response.response = String.fromCharCode(data.key_press);
+                console.log(data.responses);
+                response.response = data.responses.Q0;
                 response.rt = data.rt;
                 response.expTimer = data.time_elapsed / 1000;
 
@@ -120,42 +110,44 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         }
         timeline.push(wordTrial);
 
-        // let subject view their choice
-        let breakTrial = {
-            type: 'single-stim',
-            is_html: true,
-            timing_response: 1000,
-            response_ends_trial: false,
+        // // let subject view their choice
+        // let breakTrial = {
+        //     type: 'single-stim',
+        //     is_html: true,
+        //     timing_response: 1000,
+        //     response_ends_trial: false,
 
-            stimulus: stimulus,
+        //     stimulus: stimulus,
 
-            prompt: function () { 
-                return prompt + `
-                    <script>
-                        ctx.beginPath();
-                        ctx.arc(xCoords[${response.response-1}],yCoord,15,0,2*Math.PI);
-                        ctx.stroke();
-                        ctx.fill();
-                    </script>
-                    `;
-            }
-        }
-        timeline.push(breakTrial);
+        //     prompt: function () { 
+        //         return prompt + `
+        //             <script>
+        //                 ctx.beginPath();
+        //                 ctx.arc(xCoords[${response.response-1}],yCoord,15,0,2*Math.PI);
+        //                 ctx.stroke();
+        //                 ctx.fill();
+        //             </script>
+        //             `;
+        //     }
+        // }
+        // timeline.push(breakTrial);
 
         trial_number++;
-    })
+    };
 
 
     let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
         MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.`
 
+    
+    let images = [];
     // add scale pic paths to images that need to be loaded
     images.push('img/scale.png');
     for (let i = 1; i <= 7; i++)
         images.push('img/scale'+i+'.jpg');
 
     jsPsych.pluginAPI.preloadImages(images, function(){ startExperiment(); });
-
+    document.timeline = timeline;
     function startExperiment() {
         jsPsych.init({
             default_iti: 0,

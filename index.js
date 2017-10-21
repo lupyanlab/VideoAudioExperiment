@@ -19,12 +19,12 @@ fs.readdirSync('dev/17-objects').forEach(folder => {
     fs.readdirSync('dev/17-objects/'+folder).forEach(file => {
       if (file == 'TestItems') {
         fs.readdirSync('dev/17-objects/'+folder+'/TestItems').forEach(file => {     
-          if (!['.DS_Store', 'Thumbs.db'].includes(file)) {
+          if (!['.DS_Store', 'Thumbs.db', 'extra','AMC5143AAS_COB_370.jpe'].includes(file)) {
             images[folder].push('17-objects/'+folder+'/TestItems/'+file);
           }
         });
       }
-      if (!['.DS_Store', 'TestItems', 'Thumbs.db'].includes(file)) {
+      if (!['.DS_Store', 'TestItems', 'Thumbs.db', 'extra','AMC5143AAS_COB_370.jpe'].includes(file)) {
         // console.log('dev/17-objects/'+folder+'/'+file)
         images[folder].push('17-objects/'+folder+'/'+file);
       }

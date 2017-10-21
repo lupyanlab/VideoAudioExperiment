@@ -26,9 +26,22 @@ $(document).ready(function(){
             data: JSON.stringify({subjCode: subjCode}),
             success: function (data) {
                 console.log(data);
-                $("#loading").remove();
 
-                runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
+                let images = [];
+                let categories = data.trials.categories.slice(0,5);
+                let stimuli = data.trials.images;
+
+                for (let category of categories) {
+                    for (let file of stimuli[category]) {
+                        images.push(file);
+                    }
+                }
+                jsPsych.pluginAPI.preloadImages(images, function(){ 
+                    
+                    $("#loading").remove();
+                    runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
+                
+                });
             }
         })
     }); // Remove

@@ -43,7 +43,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
 
     let trial_number = 1;
     let images = [];
-    let num_trials = trials.length;
+    let num_trials = trials.num_trials;
 
     // Pushes each audio trial to timeline
     _.forEach(trials, (trial) => {
