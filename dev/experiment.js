@@ -18,7 +18,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     let welcome_block = {
         type: "text",
         cont_key: ' ',
-        text: `<h1>Image Simularity</h1>
+        text: `<h1>Categories Experiment</h1>
         <p>Welcome to the experiment. Thank you for participating! Press SPACE to begin.</p>`
     };
 
@@ -31,10 +31,13 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         key_forward: ' ',
         key_backward: 8,
         pages: [
-            `<p>In this experiment, you will see two drawings and rate their simularity from 1 to 7.
+            `<p>In this experiment, you will see images of a single category, and you will need to type your shortest and best answer that describes the images shown.
+            </p> ${continue_space}`,
+            
+            `<p>Your score will be based on how well your answer coordinates with other previous answers.
             </p> ${continue_space}`,
 
-            `<p>Use the 1-7 number keys to select your choice.
+            `<p>Use the your keyboard and click on the text box to type in your answer. Then, click on the displayed button to submit your answer.
             </p> ${continue_space}`,
         ]
     };
