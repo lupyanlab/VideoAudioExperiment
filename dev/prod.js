@@ -1,4 +1,4 @@
-const PORT = 7071;
+const PORT = 7072;
 const FULLSCREEN = true;
 $(document).ready(function(){
 
@@ -23,9 +23,22 @@ $(document).ready(function(){
             data: JSON.stringify({subjCode: subjCode}),
             success: function (data) {
                 console.log(data);
-                $("#loading").remove();
+                
+                let images = [];
+                let categories = data.trials.categories.slice(0,5);
+                let stimuli = data.trials.images;
 
-                runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
+                for (let category of categories) {
+                    for (let file of stimuli[category]) {
+                        images.push(file);
+                    }
+                }
+                jsPsych.pluginAPI.preloadImages(images, function(){ 
+                    
+                    $("#loading").remove();
+                    runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
+                
+                });
             }
         })
     
