@@ -138,6 +138,21 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         trial_number++;
     };
 
+    
+    let getQuestions = {
+        type: 'call-function',
+        func: () => {
+            $.ajax({
+                url: 'http://'+document.domain+':'+PORT+'/questions',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+    }
+    timeline.push(getQuestions);
 
     let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
         MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.`

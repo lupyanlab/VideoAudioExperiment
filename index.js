@@ -76,7 +76,7 @@ app.post('/trials', function (req, res) {
 
 app.post('/questions', function(req, res) {
   let path = 'IRQ_questions.txt';
-  let questions = _.shuffle(fs.readFileSync(path).toString().split('\n'));
+  let questions = _.shuffle(fs.readFileSync(path).toString().split('\r').split('\n').filter((line) => {return line.replace(/ /g,'').length > 0}));
   res.send({success: true, questions: questions});
 });
 
