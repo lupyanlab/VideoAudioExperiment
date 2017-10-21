@@ -39,7 +39,7 @@ $(document).ready(function(){
                 jsPsych.pluginAPI.preloadImages(images, function(){ 
                     
                     $("#loading").remove();
-                    runExperiment({categories, images: stimuli}, subjCode, workerId, assignmentId, hitId);
+                    runExperiment({categories, images: stimuli, questions: data.trials.questions}, subjCode, workerId, assignmentId, hitId);
                 
                 });
             }

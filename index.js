@@ -70,16 +70,14 @@ app.post('/trials', function (req, res) {
   for (let category in subjImages) {
     subjImages[category] = _.shuffle(subjImages[category]);
   };
-  let trials = {categories: subjCategories, images: subjImages};
+  let path = 'IRQ_questions.txt';
+  let questions = _.shuffle(fs.readFileSync(path).toString().replace(/\r/g,'\n').split('\n')).filter((line) => {return line.replace(/ /g,'').length>0});
+  let trials = {categories: subjCategories, images: subjImages, questions: questions};
+
+  
+  
   res.send({success: true, trials: trials});
 })
-
-app.post('/questions', function(req, res) {
-  let path = 'IRQ_questions.txt';
-  let questions = _.shuffle(fs.readFileSync(path).toString().split('\r').split('\n').filter((line) => {return line.replace(/ /g,'').length > 0}));
-  res.send({success: true, questions: questions});
-});
-
 // POST endpoint for receiving trial responses
 app.post('/data', function (req, res) {
   console.log('data post request received');

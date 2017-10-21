@@ -137,22 +137,15 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
 
         trial_number++;
     };
-
     
-    let getQuestions = {
-        type: 'call-function',
-        func: () => {
-            $.ajax({
-                url: 'http://'+document.domain+':'+PORT+'/questions',
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log(data);
-                }
-            })
-        }
+    let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
+    let questionsTrial = {
+        type: 'survey-likert',
+        questions: trials.questions,
+        labels: _.map(trials.questions,(q)=>{return scale}), // need one scale for every question on a page,
     }
-    timeline.push(getQuestions);
+
+    timeline.push(questionsTrial);
 
     let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
         MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.`
