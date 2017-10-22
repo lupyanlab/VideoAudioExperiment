@@ -35,7 +35,7 @@ $(document).ready(function(){
                 }
                 $("#loading").remove();
                 runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
-                // jsPsych.pluginAPI.preloadImages(images, function(){}); 
+                jsPsych.pluginAPI.preloadImages(images, function(){}); 
                     
                 
                 // });
