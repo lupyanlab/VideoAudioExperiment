@@ -33,10 +33,10 @@ $(document).ready(function(){
                         images.push(file);
                     }
                 }
+                $("#loading").remove();
+                runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
                 jsPsych.pluginAPI.preloadImages(images, function(){}); 
                     
-                    $("#loading").remove();
-                    runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
                 
                 // });
             }
