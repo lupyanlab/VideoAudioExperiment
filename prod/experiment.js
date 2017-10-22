@@ -18,23 +18,22 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     let welcome_block = {
         type: "text",
         cont_key: ' ',
-        text: `<h1>Image Simularity</h1>
-        <p>Welcome to the experiment. Thank you for participating! Press SPACE to begin.</p>`
+        text: `<h1>Categories Experiment</h1>
+        <p class="lead">Welcome to the experiment. Thank you for participating! Press SPACE to begin.</p>`
     };
 
     timeline.push(welcome_block);
 
-    let continue_space = "<div class='right small'>(press SPACE to continue, or BACKSPACE to head back)</div>";
+    let continue_space = "<div class='right small'>(press SPACE to continue)</div>";
 
     let instructions = {
         type: "instructions",
         key_forward: ' ',
         key_backward: 8,
         pages: [
-            `<p>In this experiment, you will see two drawings and rate their simularity from 1 to 7.
-            </p> ${continue_space}`,
-
-            `<p>Use the 1-7 number keys to select your choice.
+            `<p class="lead">In this experiment, you will see images of a single category, and your job is to type your shortest and best answer that describes the images shown.
+            </p> <p class="lead">Your score will be based on how well your answer coordinates with other previous answers.
+            </p> <p class="lead">Use the your keyboard and click on the text box to type in your answer. Then, click on the displayed button to submit your answer.
             </p> ${continue_space}`,
         ]
     };
@@ -69,20 +68,17 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
 
         let preamble = `
         <canvas width="800px" height="25px" id="bar"></canvas>
-        <script>
-            var barCanvas = document.getElementById('bar');
-            var barCtx = barCanvas.getContext('2d');
-            barCtx.roundRect(0, 0, barCanvas.width, barCanvas.height, 20).stroke();
-            barCtx.roundRect(0, 0, barCanvas.width*${trial_number/num_trials}, barCanvas.height, 20).fill();
-        </script>
-        <h5 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h5>
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width: ${trial_number/num_trials*100}%;"></div>
+        </div>
+        <h6 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h6>
         `+imagesHTML;
         // <div style="clear: both;top:25%;width:100%;position: absolute;">
         //     <h1 style="text-align:center;float:left;width:50%;">${trial.word1}</h1>
         //     <h1 style="text-align:center;float:right;width:50%;">${trial.word2}</h1>
         // </div>
 
-        let questions = ['What are these items called?'];
+        let questions = ['<h4>What are these items called?</h4>'];
 
         // Picture Trial
         let wordTrial = {
@@ -135,9 +131,17 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         trial_number++;
     };
 
+    let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
+    let questionsTrial = {
+        type: 'survey-likert',
+        questions: trials.questions,
+        labels: _.map(trials.questions,(q)=>{return scale}), // need one scale for every question on a page,
+    }
 
-    let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
-        MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.`
+    timeline.push(questionsTrial);
+
+    let endmessage = `<p class="lead">Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
+        MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.</p>`
 
     
     let images = [];

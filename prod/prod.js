@@ -12,8 +12,8 @@ $(document).ready(function(){
         let assignmentId = 'assignmentId';
         let hitId = 'hitId';
 
-        $("#loading").html('Loading trials... please wait. </br> <img src="img/preloader.gif">')
-
+        $("#loading").html('<h2 style="text-align:center;">Loading trials... please wait.</h2> </br> <div  class="col-md-2 col-md-offset-5"><img src="img/preloader.gif"></div>')
+        
         // This calls server to run python generate trials (judements.py) script
         // Then passes the generated trials to the experiment
         $.ajax({
@@ -25,7 +25,7 @@ $(document).ready(function(){
                 console.log(data);
                 
                 let images = [];
-                let categories = data.trials.categories.slice(0,5);
+                let categories = data.trials.categories;
                 let stimuli = data.trials.images;
 
                 for (let category of categories) {
