@@ -33,12 +33,12 @@ $(document).ready(function(){
                         images.push(file);
                     }
                 }
-                jsPsych.pluginAPI.preloadImages(images, function(){ 
+                jsPsych.pluginAPI.preloadImages(images, function(){}); 
                     
                     $("#loading").remove();
                     runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
                 
-                });
+                // });
             }
         })
     
