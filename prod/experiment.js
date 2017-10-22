@@ -47,6 +47,12 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     // Pushes each audio trial to timeline
     for (let category of trials.categories) {
 
+        // let preload = {
+        //     type: 'call-function',
+        //     func: ()=>{jsPsych.pluginAPI.preloadImages(trials.images[category], function(){console.log('hello');});}
+        // }
+        // timeline.push(preload);
+
         
         // Empty Response Data to be sent to be collected
         let response = {

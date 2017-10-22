@@ -36,12 +36,12 @@ $(document).ready(function(){
                         images.push(file);
                     }
                 }
-                jsPsych.pluginAPI.preloadImages(images, function(){ 
+                jsPsych.pluginAPI.preloadImages(images, function(){}); 
                     
                     $("#loading").remove();
                     runExperiment({categories, images: stimuli, questions: data.trials.questions}, subjCode, workerId, assignmentId, hitId);
                 
-                });
+                // });
             }
         })
     }); // Remove

@@ -902,3 +902,14 @@ subjCode,workerId,assignmentId,hitId,sofa,2.305,,2,214
 subjCode,workerId,assignmentId,hitId,bench,2.489,,3,177
 subjCode,workerId,assignmentId,hitId,bill,2.942,,4,445
 subjCode,workerId,assignmentId,hitId,bathsuit,3.386,,5,430
+subjCode,workerId,assignmentId,hitId,umbrella,2.677,,1,1509
+subjCode,workerId,assignmentId,hitId,bucket,5.003,buckets,2,2311
+subjCode,workerId,assignmentId,hitId,sofa,7.318,sofas,3,2306
+subjCode,workerId,assignmentId,hitId,watch,11.043,,4,3717
+subjCode,workerId,assignmentId,hitId,windchime,11.934,,5,878
+subjCode,workerId,assignmentId,hitId,domino,3.337,what,1,1922
+subjCode,workerId,assignmentId,hitId,babycarriage,4.752,yo,2,1404
+subjCode,workerId,assignmentId,hitId,powerstrip,6.905,asdf,3,2141
+subjCode,workerId,assignmentId,hitId,bird,7.646,,4,732
+subjCode,workerId,assignmentId,hitId,microscope,8.311,,5,655
+subjCode,workerId,assignmentId,hitId,armyguy,6.309,soldiers,1,4414
