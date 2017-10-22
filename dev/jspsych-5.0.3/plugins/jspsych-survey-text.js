@@ -51,18 +51,22 @@ jsPsych.plugins['survey-text'] = (function() {
       }));
 
       // add question text
-      $("#jspsych-survey-text-" + i).append('<p class="jspsych-survey-text">' + trial.questions[i] + '</p>');
-
       // add text box
-      $("#jspsych-survey-text-" + i).append('<textarea name="#jspsych-survey-text-response-' + i + '" cols="' + trial.columns[i] + '" rows="' + trial.rows[i] + '"></textarea>');
-    }
+      // add submit button
+      $("body").append(`
+        <form action="">
+          <p class="jspsych-survey-text">${trial.questions[i]}</p>
+          <input id="answer" name="#jspsych-survey-text-response-${i}" placeholder="Your answer..." type="text" autofocus>
+          <button type="submit" id="jspsych-survey-text-next" class="jspsych-btn jspsych-survey-text" />
+        </form>
+      `)
 
-    // add submit button
-    display_element.append($('<button>', {
-      'id': 'jspsych-survey-text-next',
-      'class': 'jspsych-btn jspsych-survey-text'
-    }));
-    $("#jspsych-survey-text-next").html('Submit Answers');
+    }
+    $('#answer').focus();
+    window.setTimeout(() => {
+      $('#answer').val('');
+    },1)
+    $("#jspsych-survey-text-next").html('Submit Answer');
     $("#jspsych-survey-text-next").click(function() {
       // measure response time
       var endTime = (new Date()).getTime();
@@ -70,13 +74,7 @@ jsPsych.plugins['survey-text'] = (function() {
 
       // create object to hold responses
       var question_data = {};
-      $("div.jspsych-survey-text-question").each(function(index) {
-        var id = "Q" + index;
-        var val = $(this).children('textarea').val();
-        var obje = {};
-        obje[id] = val;
-        $.extend(question_data, obje);
-      });
+      var question_data = {Q0: $('#answer').val()};
 
       // save data
       var trialdata = {

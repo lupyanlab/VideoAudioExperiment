@@ -15,7 +15,7 @@ $(document).ready(function(){
         let hitId = 'hitId';
 
         $("form").remove();
-        $("#loading").html('Loading trials... please wait. </br> <img src="img/preloader.gif">')
+        $("#loading").html('<h3>Loading trials... please wait.</h3> </br> <img src="img/preloader.gif">')
 
         // This calls server to run python generate trials (judements.py) script
         // Then passes the generated trials to the experiment

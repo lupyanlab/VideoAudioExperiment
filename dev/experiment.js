@@ -19,25 +19,21 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         type: "text",
         cont_key: ' ',
         text: `<h1>Categories Experiment</h1>
-        <p>Welcome to the experiment. Thank you for participating! Press SPACE to begin.</p>`
+        <p class="lead">Welcome to the experiment. Thank you for participating! Press SPACE to begin.</p>`
     };
 
     timeline.push(welcome_block);
 
-    let continue_space = "<div class='right small'>(press SPACE to continue, or BACKSPACE to head back)</div>";
+    let continue_space = "<div class='right small'>(press SPACE to continue)</div>";
 
     let instructions = {
         type: "instructions",
         key_forward: ' ',
         key_backward: 8,
         pages: [
-            `<p>In this experiment, you will see images of a single category, and you will need to type your shortest and best answer that describes the images shown.
-            </p> ${continue_space}`,
-            
-            `<p>Your score will be based on how well your answer coordinates with other previous answers.
-            </p> ${continue_space}`,
-
-            `<p>Use the your keyboard and click on the text box to type in your answer. Then, click on the displayed button to submit your answer.
+            `<p class="lead">In this experiment, you will see images of a single category, and your job is to type your shortest and best answer that describes the images shown.
+            </p> <p class="lead">Your score will be based on how well your answer coordinates with other previous answers.
+            </p> <p class="lead">Use the your keyboard and click on the text box to type in your answer. Then, click on the displayed button to submit your answer.
             </p> ${continue_space}`,
         ]
     };
@@ -73,12 +69,19 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         let preamble = `
         <canvas width="800px" height="25px" id="bar"></canvas>
         <script>
-            var barCanvas = document.getElementById('bar');
-            var barCtx = barCanvas.getContext('2d');
-            barCtx.roundRect(0, 0, barCanvas.width, barCanvas.height, 20).stroke();
-            barCtx.roundRect(0, 0, barCanvas.width*${trial_number/num_trials}, barCanvas.height, 20).fill();
+            $(document).ready( function() {
+                window.setTimeout(() => {
+                    $('textarea').attr('placeholder', 'placeholder')
+                    .removeAttr('rows').removeAttr('cols');
+                }, 5);
+                
+                var barCanvas = document.getElementById('bar');
+                var barCtx = barCanvas.getContext('2d');
+                barCtx.roundRect(0, 0, barCanvas.width, barCanvas.height, 20).stroke();
+                barCtx.roundRect(0, 0, barCanvas.width*${trial_number/num_trials}, barCanvas.height, 20).fill();
+            })
         </script>
-        <h5 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h5>
+        <h6 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h6>
         `+imagesHTML;
         // <div style="clear: both;top:25%;width:100%;position: absolute;">
         //     <h1 style="text-align:center;float:left;width:50%;">${trial.word1}</h1>
@@ -137,7 +140,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
 
         trial_number++;
     };
-    
+
     let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
     let questionsTrial = {
         type: 'survey-likert',
