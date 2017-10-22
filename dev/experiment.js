@@ -68,19 +68,9 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
 
         let preamble = `
         <canvas width="800px" height="25px" id="bar"></canvas>
-        <script>
-            $(document).ready( function() {
-                window.setTimeout(() => {
-                    $('textarea').attr('placeholder', 'placeholder')
-                    .removeAttr('rows').removeAttr('cols');
-                }, 5);
-                
-                var barCanvas = document.getElementById('bar');
-                var barCtx = barCanvas.getContext('2d');
-                barCtx.roundRect(0, 0, barCanvas.width, barCanvas.height, 20).stroke();
-                barCtx.roundRect(0, 0, barCanvas.width*${trial_number/num_trials}, barCanvas.height, 20).fill();
-            })
-        </script>
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width: ${trial_number/num_trials*100}%;"></div>
+        </div>
         <h6 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h6>
         `+imagesHTML;
         // <div style="clear: both;top:25%;width:100%;position: absolute;">
@@ -88,7 +78,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         //     <h1 style="text-align:center;float:right;width:50%;">${trial.word2}</h1>
         // </div>
 
-        let questions = ['What are these items called?'];
+        let questions = ['<h4>What are these items called?</h4>'];
 
         // Picture Trial
         let wordTrial = {
@@ -150,8 +140,8 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
 
     timeline.push(questionsTrial);
 
-    let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
-        MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.`
+    let endmessage = `<p class="lead">Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
+        MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.</p>`
 
     
     let images = [];

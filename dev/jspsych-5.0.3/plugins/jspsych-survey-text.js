@@ -56,7 +56,7 @@ jsPsych.plugins['survey-text'] = (function() {
       $("body").append(`
         <form action="">
           <p class="jspsych-survey-text">${trial.questions[i]}</p>
-          <input id="answer" name="#jspsych-survey-text-response-${i}" placeholder="Your answer..." type="text" autofocus>
+          <input id="answer" class="form-control" name="#jspsych-survey-text-response-${i}" placeholder="Your answer..." type="text" autofocus>
           <button type="submit" id="jspsych-survey-text-next" class="jspsych-btn jspsych-survey-text" />
         </form>
       `)
@@ -79,7 +79,7 @@ jsPsych.plugins['survey-text'] = (function() {
       // save data
       var trialdata = {
         "rt": response_time,
-        "responses": JSON.stringify(question_data)
+        "responses": question_data
       };
 
       display_element.html('');
