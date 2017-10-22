@@ -40,7 +40,7 @@ jsPsych.plugins['survey-likert'] = (function() {
       var width = 100 / trial.labels[i].length;
       options_string = '<ul class="jspsych-survey-likert-opts" data-radio-group="Q' + i + '">';
       for (var j = 0; j < trial.labels[i].length; j++) {
-        options_string += '<li style="width:' + width + '%"><input type="radio" name="Q' + i + '" value="' + j + '"><label class="jspsych-survey-likert-opt-label">' + trial.labels[i][j] + '</label></li>';
+        options_string += '<li style="width:' + width + '%"><input type="radio" name="Q' + i + '" value="' + j + '"  style="height:35px; width:35px; vertical-align: middle;"><label class="jspsych-survey-likert-opt-label">' + trial.labels[i][j] + '</label></li>';
       }
       options_string += '</ul>';
       form_element.append(options_string);
