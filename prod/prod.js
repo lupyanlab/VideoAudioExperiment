@@ -27,8 +27,8 @@ $(document).ready(function(){
                 console.log(data);
                 
                 let images = [];
-                categories = data.trials.categories;
-                stimuli = data.trials.images;
+                let categories = data.trials.categories;
+                let stimuli = data.trials.images;
 
                 for (let category of categories) {
                     for (let file of stimuli[category]) {

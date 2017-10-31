@@ -36,11 +36,11 @@ app.listen(app.get('port'), function () {
 })
 
 let categoriesQueues = {};
+let images = {};
 // POST endpoint for requesting trials
 app.post('/trials', function (req, res) {
   console.log("trials post request received");
   
-  let images = {};
   let categories = [];
   let subjCode = req.body.subjCode;
   let numTrials = req.body.numTrials;
@@ -51,6 +51,7 @@ app.post('/trials', function (req, res) {
 
   if (newSet == 'true' || !(numTrials in categoriesQueues) || categoriesQueues[numTrials].length == 0 ) {
     categoriesQueues[numTrials] = [];
+    images = {};
     let categoriesQueue = [];
     // include all images recursively in 17-objects directory
     fs.readdirSync('dev/17-objects').forEach(folder => {
@@ -85,7 +86,7 @@ app.post('/trials', function (req, res) {
   let subjCategories = _.shuffle(categoriesQueues[numTrials].pop());
   let subjImages = Object.assign({}, images); 
   for (let category in subjImages)
-  subjImages[category] = _.shuffle(subjImages[category]);
+    subjImages[category] = _.shuffle(subjImages[category]);
   
   let path = 'IRQ_questions.txt';
   let questions = _.shuffle(fs.readFileSync(path).toString().replace(/\r/g,'\n').split('\n')).filter((line) => {return line.replace(/ /g,'').length>0});
