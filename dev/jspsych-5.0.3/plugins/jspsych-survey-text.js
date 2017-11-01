@@ -68,6 +68,10 @@ jsPsych.plugins['survey-text'] = (function() {
     },1)
     $("#jspsych-survey-text-next").html('Submit Answer');
     $("#jspsych-survey-text-next").click(function() {
+      if ($('#answer').val() == "") {
+        alert("Answer must be filled out");
+        return false;
+      }
       // measure response time
       var endTime = (new Date()).getTime();
       var response_time = endTime - startTime;
