@@ -137,11 +137,26 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         trial_number++;
     };
 
+    
+    let questionsInstructions = {
+        type: "instructions",
+        key_forward: ' ',
+        key_backward: 8,
+        pages: [
+            `<p class="lead">This is a filler for instructions for the questions.
+            </p> ${continue_space}`,
+        ]
+    };
+    timeline.push(questionsInstructions);
+
     let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
     let questionsTrial = {
         type: 'survey-likert',
         questions: trials.questions,
         labels: _.map(trials.questions,(q)=>{return scale}), // need one scale for every question on a page,
+        on_finish: function(data) {
+            console.log(data);
+        }
     }
 
     timeline.push(questionsTrial);
