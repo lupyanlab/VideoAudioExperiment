@@ -11,7 +11,6 @@ $(document).ready(function(){
         //////////////////////////////////////////
         let subjCode = $("#subjCode").val().slice();
         let numTrials = $("#numTrials").val();
-        let newSet =  $("#newSet").val();
         let reset =  $("#reset").val();
         let workerId = 'workerId';
         console.log(numTrials);
@@ -28,7 +27,7 @@ $(document).ready(function(){
             url: 'http://'+document.domain+':'+PORT+'/trials',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({subjCode, numTrials, newSet, reset}),
+            data: JSON.stringify({subjCode, numTrials, reset}),
             success: function (data) {
                 console.log(data);
 

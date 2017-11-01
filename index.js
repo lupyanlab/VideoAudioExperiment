@@ -150,8 +150,10 @@ app.post('/trials', function (req, res) {
               'bagel',
               'ball',
         */
+        
+        let categories = _.shuffle(Object.keys(categoriesCount));
         let countLists = {};
-        for (let cat in categoriesCount) {
+        for (let cat of categories) {
           if (!(categoriesCount[cat] in countLists))
             countLists[categoriesCount[cat]] = [cat];
           else 
@@ -186,18 +188,18 @@ app.post('/trials', function (req, res) {
         }
         
 
-        // let catPath = 'categoriesCount.csv';
-        // let headers = categories;
-        // if (!fs.existsSync(catPath))
-        //   writer = csvWriter({ headers: headers });
-        // else
-        //   writer = csvWriter({ sendHeaders: false });
+        let catPath = 'categoriesCount.csv';
+        let headers = categories;
+        if (!fs.existsSync(catPath))
+          writer = csvWriter({ headers: headers });
+        else
+          writer = csvWriter({ sendHeaders: false });
 
-        // writer.pipe(fs.createWriteStream(catPath, { flags: 'a' }));
-        // // console.log('awkward')
-        // // console.log(categoriesCount);
-        // writer.write(categoriesCount);
-        // writer.end();
+        writer.pipe(fs.createWriteStream(catPath, { flags: 'a' }));
+        // console.log('awkward')
+        // console.log(categoriesCount);
+        writer.write(categoriesCount);
+        writer.end();
 
 
         let subjImages = Object.assign({}, images);
