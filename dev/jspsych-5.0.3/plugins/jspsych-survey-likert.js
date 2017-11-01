@@ -59,16 +59,23 @@ jsPsych.plugins['survey-likert'] = (function() {
 
       // create object to hold responses
       var question_data = {};
+      var valid = true;
       $("#jspsych-survey-likert-form .jspsych-survey-likert-opts").each(function(index) {
         var id = $(this).data('radio-group');
         var response = $('input[name="' + id + '"]:checked').val();
         if (typeof response == 'undefined') {
           response = -1;
+          valid = false;
         }
         var obje = {};
         obje[id] = response;
         $.extend(question_data, obje);
       });
+
+      if (!valid) {
+        alert("Answer must be filled out");
+        return false;
+      }
 
       // save data
       var trial_data = {

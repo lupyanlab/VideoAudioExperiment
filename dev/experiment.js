@@ -154,6 +154,9 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         type: 'survey-likert',
         questions: trials.questions,
         labels: _.map(trials.questions,(q)=>{return scale}), // need one scale for every question on a page,
+        on_finish: function(data) {
+            console.log(data);
+        }
     }
 
     timeline.push(questionsTrial);

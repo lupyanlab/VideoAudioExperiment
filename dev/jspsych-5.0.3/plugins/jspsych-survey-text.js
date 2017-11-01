@@ -68,7 +68,7 @@ jsPsych.plugins['survey-text'] = (function() {
     },1)
     $("#jspsych-survey-text-next").html('Submit Answer');
     $("#jspsych-survey-text-next").click(function() {
-      if ($('#answer').val() == "") {
+      if ($('#answer').val().replace(/\s/g,'') == "") {
         alert("Answer must be filled out");
         return false;
       }
