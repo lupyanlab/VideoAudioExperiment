@@ -3,6 +3,11 @@ const FULLSCREEN = true;
 $(document).ready(function(){
 
     
+    $(window).on('beforeunload', function(){
+        return 'Are you sure you want to leave?';
+    });
+
+    
 
         //////////////////////////////////////////
         // DEFINE workerId, hitId, assignmentId HERE
