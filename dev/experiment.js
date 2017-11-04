@@ -149,7 +149,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         }
     }
 
-    // timeline.push(questionsTrial);
+    timeline.push(questionsTrial);
 
     let demographicsTrial = {
         type: 'html',
