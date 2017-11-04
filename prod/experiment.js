@@ -77,6 +77,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
             workerId: workerId,
             assignmentId: assignmentId,
             hitId: hitId,
+            participantID: participantID,
             category: category,
             expTimer: -1,
             response: -1,
@@ -167,8 +168,18 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     };
     timeline.push(demographicsTrial);
 
-    let endmessage = `<p class="lead">Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
-        MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.</p> ${trials.debriefing}`
+    let endmessage = `
+    <p class="lead">Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
+    MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.</p>
+    
+    <h3>Debriefing </h3>
+    <p class="lead">
+    Thank you for your participation. The study is designed to collect information about the different ways 
+    in which people typically represent thoughts in their mind. The responses will be used in the 
+    development of a shorter questionnaire to assess differences in these representations. 
+    </p>
+    
+    `
 
 
     let images = [];
