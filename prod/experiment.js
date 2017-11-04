@@ -32,12 +32,12 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     // declare the block.
     var consent = {
         type: 'html',
-        url: "external_page.html",
+        url: "./consent.html",
         cont_btn: "start",
         check_fn: check_consent
     };
 
-    // timeline.push(consent);
+    timeline.push(consent);
 
     let welcome_block = {
         type: "text",
@@ -153,7 +153,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
 
     let demographicsTrial = {
         type: 'html',
-        url: "./demographics.html",
+        url: "./demographics/demographics.html",
         cont_btn: "cmplt",
         check_fn: function() {
             if(isCompleted()) {
