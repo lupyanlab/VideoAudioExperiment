@@ -37,7 +37,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         check_fn: check_consent
     };
 
-    timeline.push(consent);
+    // timeline.push(consent);
 
     let welcome_block = {
         type: "text",
@@ -155,7 +155,15 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         type: 'html',
         url: "./demographics.html",
         cont_btn: "cmplt",
-        // check_fn: check_consent
+        check_fn: function() {
+            if(isCompleted()) {
+                console.log(getResponses());
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     };
     timeline.push(demographicsTrial);
 

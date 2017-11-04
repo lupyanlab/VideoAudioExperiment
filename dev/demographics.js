@@ -28,8 +28,18 @@ window.survey = new Survey.Model({
             ]});
 
 
+let completed = false;
+function isCompleted() {
+    return completed;
+}
+let responses = {};
+function getResponses() {
+    return responses;
+}
 survey.onComplete.add(function(result) {
-    document.querySelector('#surveyResult').innerHTML = "result: " + JSON.stringify(result.data);
+    completed = true;
+    responses = result.data;
+    // document.querySelector('#surveyResult').innerHTML = "result: " + JSON.stringify(result.data);
 });
 
 
@@ -38,5 +48,6 @@ $("#surveyElement").Survey({
 });
 
 $(document).ready(function(){
-    $('#surveyElement > .sv_complete_btn').attr('id', 'cmplt')
+    survey.showCompletedPage = false;
+    $('#surveyElement').find('.sv_complete_btn').attr('id', 'cmplt');
 });
