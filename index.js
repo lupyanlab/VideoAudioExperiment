@@ -95,9 +95,10 @@ app.post('/trials', function (req, res) {
           let subjImages = Object.assign({}, images);
           for (let category in subjImages)
             subjImages[category] = _.shuffle(subjImages[category]);
-          let questions = _.shuffle(fs.readFileSync('IRQ_questions.txt').toString().replace(/\r/g, '\n').split('\n')).filter((line) => { return line.replace(/ /g, '').length > 0 });
+          let questions = _.shuffle(fs.readFileSync('IRQ_questions.txt').toString().replace(/\r/g, '\n').split('\n')).filter((line) => {return line.replace(/ /g, '').length > 0 });
+          let debriefing = fs.readFileSync('debriefing.html').toString();
 
-          let trials = { categories: subjCategories, images: subjImages, questions: questions };
+          let trials = { categories: subjCategories, images: subjImages, questions: questions, debriefing: debriefing };
           res.send({ success: true, trials: trials });
         });
       })
@@ -151,9 +152,9 @@ app.post('/trials', function (req, res) {
     for (let category in subjImages)
       subjImages[category] = _.shuffle(subjImages[category]);
 
-    let path = 'IRQ_questions.txt';
-    let questions = _.shuffle(fs.readFileSync(path).toString().replace(/\r/g, '\n').split('\n')).filter((line) => { return line.replace(/ /g, '').length > 0 });
-    let trials = { categories: subjCategories, images: subjImages, questions: questions };
+    let questions = _.shuffle(fs.readFileSync('IRQ_questions.txt').toString().replace(/\r/g, '\n').split('\n')).filter((line) => { return line.replace(/ /g, '').length > 0 });
+    let debriefing = fs.readFileSync('debriefing.html').toString();
+    let trials = { categories: subjCategories, images: subjImages, questions: questions, debriefing, debriefing};
 
     console.log(categoriesCount);
     res.send({ success: true, trials: trials });

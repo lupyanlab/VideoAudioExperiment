@@ -13,8 +13,6 @@ $(document).ready(function(){
         let numTrials = $("#numTrials").val();
         let reset =  $("#reset").val();
         let workerId = 'workerId';
-        console.log(numTrials);
-        console.log(newSet);
         let assignmentId = 'assignmentId';
         let hitId = 'hitId';
 
@@ -42,7 +40,7 @@ $(document).ready(function(){
                 jsPsych.pluginAPI.preloadImages(images, function(){}); 
                     
                 // $("#loading").remove();
-                runExperiment({categories, images: stimuli, questions: data.trials.questions}, subjCode, workerId, assignmentId, hitId);
+                runExperiment({categories, images: stimuli, questions: data.trials.questions, debriefing: data.trials.debriefing}, subjCode, workerId, assignmentId, hitId);
     
             }
         })
