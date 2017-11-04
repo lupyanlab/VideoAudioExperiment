@@ -139,7 +139,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     };
     timeline.push(questionsInstructions);
 
-    let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree", "testing"];
+    let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
     let questionsTrial = {
         type: 'survey-likert',
         questions: trials.questions,
