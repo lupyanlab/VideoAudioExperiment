@@ -96,9 +96,8 @@ app.post('/trials', function (req, res) {
           for (let category in subjImages)
             subjImages[category] = _.shuffle(subjImages[category]);
           let questions = _.shuffle(fs.readFileSync('IRQ_questions.txt').toString().replace(/\r/g, '\n').split('\n')).filter((line) => {return line.replace(/ /g, '').length > 0 });
-          let debriefing = fs.readFileSync('debriefing.html').toString();
 
-          let trials = { categories: subjCategories, images: subjImages, questions: questions, debriefing: debriefing };
+          let trials = { categories: subjCategories, images: subjImages, questions: questions };
           res.send({ success: true, trials: trials });
         });
       })

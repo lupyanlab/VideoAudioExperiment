@@ -77,6 +77,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
             workerId: workerId,
             assignmentId: assignmentId,
             hitId: hitId,
+            participantID: participantID,
             category: category,
             expTimer: -1,
             response: -1,
@@ -171,26 +172,11 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     <p class="lead">Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
     MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.</p>
     
-    <h1>This is the debriefing text. </h1>
-    
-    <p>
-        Quis magna commodo nostrud sunt ex fugiat sunt fugiat. Esse cupidatat eu consequat aliquip ex mollit do ea adipisicing. Quis laborum voluptate enim incididunt exercitation.
-    </p>
-    
-    <p>
-        Proident sit do amet incididunt duis enim cupidatat. Excepteur deserunt veniam veniam culpa cupidatat commodo proident. Lorem exercitation anim commodo irure quis deserunt officia deserunt cillum esse consectetur ullamco laboris. Aliqua ullamco irure incididunt sunt irure aliqua cillum ea fugiat aliquip. Excepteur mollit eu sint commodo ex sint non amet laboris aliquip labore.
-    </p>
-    
-    <p>
-        Magna aute nisi eiusmod id qui eiusmod sit amet culpa ea anim. Veniam nostrud deserunt cupidatat consectetur nisi mollit nisi do sunt Lorem est. Adipisicing aliqua cillum culpa nostrud incididunt. Aliquip in eu Lorem aliquip deserunt consequat ea aliqua officia voluptate. Mollit veniam in dolor excepteur duis consectetur excepteur amet aliqua sunt cillum officia excepteur laborum. Incididunt elit laboris Lorem reprehenderit adipisicing qui nisi aliqua nulla velit cillum enim. Aliquip dolor amet cillum tempor eu veniam exercitation cillum et labore laboris sint.
-    </p>
-    
-    <p>
-        Duis ex duis aute sint sit amet consequat quis magna aliquip reprehenderit est. Adipisicing cupidatat nostrud nulla voluptate ipsum culpa. Lorem cillum anim ipsum non ea amet. Qui labore excepteur non non nostrud. Est aliquip labore ea eu.
-    </p>
-    
-    <p>
-    In reprehenderit mollit consequat eu laboris fugiat adipisicing sunt magna. Nisi aute do commodo magna labore cupidatat voluptate irure aliqua labore sit sunt. Pariatur adipisicing ad voluptate ut aute culpa ipsum.
+    <h3>Debriefing </h3>
+    <p class="lead">
+    Thank you for your participation. The study is designed to collect information about the different ways 
+    in which people typically represent thoughts in their mind. The responses will be used in the 
+    development of a shorter questionnaire to assess differences in these representations. 
     </p>
     
     `
