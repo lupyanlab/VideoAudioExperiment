@@ -37,7 +37,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         check_fn: check_consent
     };
 
-    timeline.push(consent);
+    // timeline.push(consent);
 
     let welcome_block = {
         type: "text",
@@ -140,25 +140,54 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     };
     timeline.push(questionsInstructions);
 
-    let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
-    let questionsTrial = {
-        type: 'survey-likert',
-        questions: trials.questions,
-        labels: _.map(trials.questions, (q) => { return scale }), // need one scale for every question on a page,
-        on_finish: function (data) {
-            console.log(data);
-        }
-    }
 
-    timeline.push(questionsTrial);
+    window.questions = trials.questions;    // allow surveyjs to access questions
+    let IRQTrial = {
+        type: 'html',
+        url: "./IRQ/IRQ.html",
+        cont_btn: "IRQ-cmplt",
+        check_fn: function() {
+            if(IRQIsCompleted()) {
+                console.log(getIRQResponses());
+                let IRQ = Object.assign({subjCode}, getIRQResponses().answers);
+                // POST demographics data to server
+                $.ajax({
+                    url: 'http://' + document.domain + ':' + PORT + '/IRQ',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(IRQ),
+                    success: function (data) {
+                        // console.log(data);
+                        // $('#surveyElement').remove();
+                        // $('#surveyResult').remove();
+                    }
+                })
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    };
+    timeline.push(IRQTrial);
 
     let demographicsTrial = {
         type: 'html',
         url: "./demographics/demographics.html",
-        cont_btn: "cmplt",
+        cont_btn: "demographics-cmplt",
         check_fn: function() {
-            if(isCompleted()) {
-                console.log(getResponses());
+            if(demographicsIsCompleted()) {
+                console.log(getDemographicsResponses());
+                let demographics = Object.assign({subjCode}, getDemographicsResponses());
+                // POST demographics data to server
+                $.ajax({
+                    url: 'http://' + document.domain + ':' + PORT + '/demographics',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(demographics),
+                    success: function () {
+                    }
+                })
                 return true;
             }
             else {
