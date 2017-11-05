@@ -140,31 +140,8 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     };
     timeline.push(questionsInstructions);
 
-    let scale = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
-    let questionsTrial = {
-        type: 'survey-likert',
-        questions: trials.questions,
-        labels: _.map(trials.questions, (q) => { return scale }), // need one scale for every question on a page,
-        on_finish: function (data) {
-            console.log(data);
-            let IRQ = data;
-            IRQ.subjCode = subjCode;
-            // POST IRQ data to server
-            $.ajax({
-                url: 'http://' + document.domain + ':' + PORT + '/IRQ',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(IRQ),
-                success: function () {
-                    return true;
-                }
-            })
-        }
-    }
 
-    // timeline.push(questionsTrial);
-
-    
+    window.questions = trials.questions;    // allow surveyjs to access questions
     let IRQTrial = {
         type: 'html',
         url: "./IRQ/IRQ.html",
@@ -172,8 +149,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         check_fn: function() {
             if(IRQIsCompleted()) {
                 console.log(getIRQResponses());
-                let IRQ = getIRQResponses();
-                IRQ.subjCode = subjCode;
+                let IRQ = Object.assign({subjCode}, getIRQResponses().answers);
                 // POST demographics data to server
                 $.ajax({
                     url: 'http://' + document.domain + ':' + PORT + '/IRQ',
@@ -184,9 +160,9 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
                         // console.log(data);
                         // $('#surveyElement').remove();
                         // $('#surveyResult').remove();
-                        return true;
                     }
                 })
+                return true;
             }
             else {
                 return false;
@@ -195,7 +171,6 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     };
     timeline.push(IRQTrial);
 
-    timeline.push(consent);
     let demographicsTrial = {
         type: 'html',
         url: "./demographics/demographics.html",
@@ -203,8 +178,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         check_fn: function() {
             if(demographicsIsCompleted()) {
                 console.log(getDemographicsResponses());
-                let demographics = getDemographicsResponses();
-                demographics.subjCode = subjCode;
+                let demographics = Object.assign({subjCode}, getDemographicsResponses());
                 // POST demographics data to server
                 $.ajax({
                     url: 'http://' + document.domain + ':' + PORT + '/demographics',
@@ -212,9 +186,9 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
                     contentType: 'application/json',
                     data: JSON.stringify(demographics),
                     success: function () {
-                        return true;
                     }
                 })
+                return true;
             }
             else {
                 return false;

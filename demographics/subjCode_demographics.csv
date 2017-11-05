@@ -1,2 +1,2 @@
-gender,native,degree,subjCode
-Male,Yes,High school diploma,subjCode
+subjCode,gender,native,degree
+subjCode,Female,Yes,"Some college, no degree"
