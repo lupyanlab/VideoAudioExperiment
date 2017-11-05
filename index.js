@@ -181,3 +181,41 @@ app.post('/data', function (req, res) {
 
   res.send({ success: true });
 })
+
+
+// POST endpoint for receiving trial responses
+app.post('/demographics', function (req, res) {
+  console.log('demographics post request received');
+
+  // Parses the trial response data to csv
+  let demographics = req.body;
+  console.log(demographics);
+  let path = 'demographics/' + demographics.subjCode + '_demographics.csv';
+  let headers = Object.keys(demographics);
+  writer = csvWriter({ headers: headers });
+
+  writer.pipe(fs.createWriteStream(path, { flags: 'w' }));
+  writer.write(demographics);
+  writer.end();
+
+  res.send({ success: true });
+})
+
+
+// POST endpoint for receiving trial responses
+app.post('/IRQ', function (req, res) {
+  console.log('IRQ post request received');
+
+  // Parses the trial response data to csv
+  let IRQ = req.body;
+  console.log(IRQ);
+  let path = 'IRQ/' + IRQ.subjCode + '_IRQ.csv';
+  let headers = Object.keys(IRQ);
+  writer = csvWriter({ headers: headers });
+
+  writer.pipe(fs.createWriteStream(path, { flags: 'w' }));
+  writer.write(IRQ);
+  writer.end();
+
+  res.send({ success: true });
+})

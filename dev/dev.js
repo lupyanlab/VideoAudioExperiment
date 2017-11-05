@@ -12,9 +12,9 @@ $(document).ready(function(){
         let subjCode = $("#subjCode").val().slice();
         let numTrials = $("#numTrials").val();
         let reset =  $("#reset").val();
-        let workerId = 'workerId';
-        let assignmentId = 'assignmentId';
-        let hitId = 'hitId';
+        let workerId = 'null';
+        let assignmentId = 'null';
+        let hitId = 'null';
 
         $("form").remove();
         $("#loading").html('<h2 style="text-align:center;">Loading trials... please wait.</h2> </br> <div  class="col-md-2 col-md-offset-5"><img src="img/preloader.gif"></div>')

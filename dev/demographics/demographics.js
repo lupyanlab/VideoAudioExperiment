@@ -19,17 +19,17 @@ window.survey = new Survey.Model({
             ]});
 
 
-let completed = false;
-function isCompleted() {
-    return completed;
+let demographicsCompleted = false;
+function demographicsIsCompleted() {
+    return demographicsCompleted;
 }
-let responses = {};
-function getResponses() {
-    return responses;
+let demographicsResponses = {};
+function getDemographicsResponses() {
+    return demographicsResponses;
 }
 survey.onComplete.add(function(result) {
-    completed = true;
-    responses = result.data;
+    demographicsCompleted = true;
+    demographicsResponses = result.data;
     // document.querySelector('#surveyResult').innerHTML = "result: " + JSON.stringify(result.data);
 });
 
@@ -40,5 +40,5 @@ $("#surveyElement").Survey({
 
 $(document).ready(function(){
     survey.showCompletedPage = false;
-    $('#surveyElement').find('.sv_complete_btn').attr('id', 'cmplt');
+    $('#surveyElement').find('.sv_complete_btn').attr('id', 'demographics-cmplt');
 });
