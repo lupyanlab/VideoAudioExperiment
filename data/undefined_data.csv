@@ -10,3 +10,7 @@ subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,ha
 subjCode,2,ill_water.wav,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,14.596,move,6508
 subjCode,3,sampleVideo1.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,20.8,think,6188
 subjCode,4,sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,27.603,stay,6777
+subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,3.651,move,2763
+subjCode,2,ill_water.wav,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,5.591,move,1928
+subjCode,3,sampleVideo1.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,26.954,move,21349
+subjCode,4,sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,30.069,stay,3096

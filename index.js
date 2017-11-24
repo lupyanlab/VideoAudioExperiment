@@ -46,8 +46,8 @@ app.post('/trials', function (req, res) {
 
 
   let trials = [];
-  csv({delimiter: '\t'})
-  .fromFile('./trials/'+sessionID+'.txt')
+  csv({delimiter: ','})
+  .fromFile('./trials/'+sessionID+'.csv')
   .on('json',(jsonObj)=>{
       // combine csv header row and csv line to a json object
       // jsonObj.a ==> 1 or 4
@@ -55,7 +55,7 @@ app.post('/trials', function (req, res) {
       trials.push(jsonObj);
   })
   .on('done',(error)=>{
-    console.log('end')
+    console.log(trials)
     let questions = _.shuffle(fs.readFileSync('IRQ_questions.txt').toString().replace(/\r/g, '\n').split('\n')).filter((line) => { return line.replace(/ /g, '').length > 0 });
     res.send({ success: true, trials: trials, questions: questions });
   })
@@ -69,7 +69,7 @@ app.post('/data', function (req, res) {
   // Parses the trial response data to csv
   let response = req.body;
   console.log(response);
-  let path = 'data/' + response.subjCode + '_data.csv';
+  let path = 'data/' + response.workerId + '_data.csv';
   let headers = Object.keys(response);
   if (!fs.existsSync(path))
     writer = csvWriter({ headers: headers });

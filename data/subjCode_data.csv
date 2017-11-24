@@ -1,0 +1,2 @@
+workerId,trialNum,filename,fileType,correctAnswer,choices,isRight,expTimer,chosen,rt
+subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,3.771,hear,3170
