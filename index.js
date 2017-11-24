@@ -69,7 +69,7 @@ app.post('/data', function (req, res) {
   // Parses the trial response data to csv
   let response = req.body;
   console.log(response);
-  let path = 'data/' + response.workerId + '_data.csv';
+  let path = 'data/' + response.subjCode + '_data.csv';
   let headers = Object.keys(response);
   if (!fs.existsSync(path))
     writer = csvWriter({ headers: headers });
@@ -83,6 +83,27 @@ app.post('/data', function (req, res) {
   res.send({ success: true });
 })
 
+
+// POST endpoint for receiving video and sounds did not play responses
+app.post('/not_play', function (req, res) {
+  console.log('not_play post request received');
+
+  // Parses the trial response data to csv
+  let response = req.body;
+  console.log(response);
+  let path = 'not_play/' + response.subjCode + '.csv';
+  let headers = Object.keys(response);
+  if (!fs.existsSync(path))
+    writer = csvWriter({ headers: headers });
+  else
+    writer = csvWriter({ sendHeaders: false });
+
+  writer.pipe(fs.createWriteStream(path, { flags: 'a' }));
+  writer.write(response);
+  writer.end();
+
+  res.send({ success: true });
+})
 
 // POST endpoint for receiving demographics responses
 app.post('/demographics', function (req, res) {

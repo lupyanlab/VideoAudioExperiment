@@ -1,2 +1,6 @@
 workerId,trialNum,filename,fileType,correctAnswer,choices,isRight,expTimer,chosen,rt
 subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,3.771,hear,3170
+subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,4.92,stay,3604
+subjCode,2,ill_water.wav,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,7.567,stay,2627
+subjCode,3,sampleVideo1.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,9.872,stay,2284
+subjCode,4,sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,11.995,stay,2096

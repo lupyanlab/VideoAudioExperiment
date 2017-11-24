@@ -149,7 +149,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 })
             }
         }
-        timeline.push(wordTrial);
+        // timeline.push(wordTrial);
         trial_number++;
     };
 
@@ -166,35 +166,55 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
     timeline.push(questionsInstructions);
 
 
-    window.questions = questions;    // allow surveyjs to access questions
-    let IRQTrial = {
-        type: 'html',
-        url: "./IRQ/IRQ.html",
-        cont_btn: "IRQ-cmplt",
-        check_fn: function () {
-            if (IRQIsCompleted()) {
-                console.log(getIRQResponses());
-                let IRQ = Object.assign({ subjCode }, getIRQResponses().answers);
-                // POST demographics data to server
+    // window.questions = questions;    // allow surveyjs to access questions
+    // let IRQTrial = {
+    //     type: 'html',
+    //     url: "./IRQ/IRQ.html",
+    //     cont_btn: "IRQ-cmplt",
+    //     check_fn: function () {
+    //         if (IRQIsCompleted()) {
+    //             console.log(getIRQResponses());
+    //             let IRQ = Object.assign({ subjCode }, getIRQResponses().answers);
+    //             // POST demographics data to server
+    //             $.ajax({
+    //                 url: 'http://' + document.domain + ':' + PORT + '/IRQ',
+    //                 type: 'POST',
+    //                 contentType: 'application/json',
+    //                 data: JSON.stringify(IRQ),
+    //                 success: function (data) {
+    //                     // console.log(data);
+    //                     // $('#surveyElement').remove();
+    //                     // $('#surveyResult').remove();
+    //                 }
+    //             })
+    //             return true;
+    //         }
+    //         else {
+    //             return false;
+    //         }
+    //     }
+    // };
+    // timeline.push(IRQTrial);
+
+    let didNotPlayQuestionTrial = {
+        type: 'survey-text',
+        questions: [['Did any of the sounds or video not play?']],
+        on_finish: function (data) {
+            console.log(data.responses);
+            if (data.responses.Q0) {
                 $.ajax({
-                    url: 'http://' + document.domain + ':' + PORT + '/IRQ',
+                    url: 'http://' + document.domain + ':' + PORT + '/not_play',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify(IRQ),
-                    success: function (data) {
-                        // console.log(data);
-                        // $('#surveyElement').remove();
-                        // $('#surveyResult').remove();
+                    data: JSON.stringify({subjCode, response: data.responses.Q0}),
+                    success: function () {
                     }
                 })
-                return true;
             }
-            else {
-                return false;
-            }
+            
         }
-    };
-    timeline.push(IRQTrial);
+    }
+    timeline.push(didNotPlayQuestionTrial);
 
     let demographicsTrial = {
         type: 'html',
