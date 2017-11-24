@@ -1,5 +1,5 @@
 // Function Call to Run the experiment
-function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
+function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitId) {
     let timeline = [];
 
     // Data that is collected for jsPsych
@@ -42,7 +42,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     let welcome_block = {
         type: "text",
         cont_key: ' ',
-        text: `<h1>Categories Experiment</h1>
+        text: `<h1>Video/Audio Experiment</h1>
         <p class="lead">Welcome to the experiment. Thank you for participating! Press SPACE to begin.</p>`
     };
 
@@ -55,9 +55,8 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         key_forward: ' ',
         key_backward: 8,
         pages: [
-            `<p class="lead">In this experiment, you will see images of a single category, and your job is to type your shortest and best answer that describes the images shown.
-            </p> <p class="lead">Your score will be based on how well your answer coordinates with other previous answers.
-            </p> <p class="lead">Use the your keyboard and click on the text box to type in your answer. Then, click on the displayed button to submit your answer.
+            `<p class="lead">In this experiment, you will see videos or listen to audio, and your job is to select the answer that describes the stimulus shown.
+            </p> <p class="lead">Use the your mouse to click on your answer. Then, click on the displayed button to submit your answer.
             </p> ${continue_space}`,
         ]
     };
@@ -65,52 +64,78 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     timeline.push(instructions);
 
     let trial_number = 1;
-    let num_trials = trials.categories.length;
+    let num_trials = trials.length;
     document.trials = trials;
 
     // Pushes each audio trial to timeline
-    for (let category of trials.categories) {
+    for (let trial of trials) {
 
         // Empty Response Data to be sent to be collected
         let response = {
-            subjCode: subjCode,
-            workerId: workerId,
-            assignmentId: assignmentId,
-            hitId: hitId,
-            participantID: participantID,
-            category: category,
+            workerId: subjCode,
+            trialNum: trial_number,
+            filename: trial.filename,
+            fileType: trial.fileType,
+            correctAnswer: trial.corectAnswer,
+            choices: trial.choices,
+            isRight: false,
             expTimer: -1,
-            response: -1,
-            trial_number: trial_number,
+            chosen: -1,
             rt: -1,
         }
-
-        let imagesHTML = '';
-        for (let img of trials.images[category]) {
-            imagesHTML += `<img src="${img}" style="max-width:16%;"/>`
+        let stimHTML = '';
+        if (trial.fileType == 'video') {
+            stimHTML = `
+            <div class="row center-xs center-sm center-md center-lg center-block">
+                <video width="400" controls>
+                    <source src="./stims/videos/${trial.filename}" type="video/mp4">
+                    <source src="./stims/videos/${trial.filename}" type="video/ogg">
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>`;
         }
+        else if (trial.fileType == 'audio') {
+            stimHTML = `
+            <div class="row center-xs center-sm center-md center-lg center-block">
+            <audio controls>
+            <source src="./stims/audios/${trial.filename}" type="audio/wav">
+            <source src="./stims/audios/${trial.filename}" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio>
+            </div>`
+        }
+        // for (let img of trials.images[category]) {
+        //     stimHTML += `<img src="${img}" style="max-width:16%;"/>`
+        // }
 
-        let preamble = `
+        let progress_bar = `
         <canvas width="800px" height="25px" id="bar"></canvas>
         <div class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" style="width: ${trial_number / num_trials * 100}%;"></div>
         </div>
         <h6 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h6>
-        `+ imagesHTML;
+        `+ stimHTML;
 
-        let questions = ['<h4>What are these items called?</h4>'];
+        let questions = ['<h4>Which of the following words best describes the above?</h4>'];
+        let required = [true];
+        let options = [trial.choices]
 
         // Picture Trial
         let wordTrial = {
-            type: 'survey-text',
-            preamble: preamble,
+            type: 'survey-multi-choice',
+            preamble: progress_bar,
             questions: questions,
+            options: options,
+            required: required,
+            horizontal: true,
 
             on_finish: function (data) {
-                console.log(data.responses);
-                response.response = data.responses.Q0;
+                console.log(JSON.parse(data.responses));
+                data.responses = JSON.parse(data.responses);
+                response.chosen = data.responses.Q0;
                 response.rt = data.rt;
                 response.expTimer = data.time_elapsed / 1000;
+                response.isRight = response.chosen == trial.correctAnswer;
 
                 // POST response data to server
                 $.ajax({
@@ -141,15 +166,15 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     timeline.push(questionsInstructions);
 
 
-    window.questions = trials.questions;    // allow surveyjs to access questions
+    window.questions = questions;    // allow surveyjs to access questions
     let IRQTrial = {
         type: 'html',
         url: "./IRQ/IRQ.html",
         cont_btn: "IRQ-cmplt",
-        check_fn: function() {
-            if(IRQIsCompleted()) {
+        check_fn: function () {
+            if (IRQIsCompleted()) {
                 console.log(getIRQResponses());
-                let IRQ = Object.assign({subjCode}, getIRQResponses().answers);
+                let IRQ = Object.assign({ subjCode }, getIRQResponses().answers);
                 // POST demographics data to server
                 $.ajax({
                     url: 'http://' + document.domain + ':' + PORT + '/IRQ',
@@ -175,10 +200,10 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
         type: 'html',
         url: "./demographics/demographics.html",
         cont_btn: "demographics-cmplt",
-        check_fn: function() {
-            if(demographicsIsCompleted()) {
+        check_fn: function () {
+            if (demographicsIsCompleted()) {
                 console.log(getDemographicsResponses());
-                let demographics = Object.assign({subjCode}, getDemographicsResponses());
+                let demographics = Object.assign({ subjCode }, getDemographicsResponses());
                 // POST demographics data to server
                 $.ajax({
                     url: 'http://' + document.domain + ':' + PORT + '/demographics',
