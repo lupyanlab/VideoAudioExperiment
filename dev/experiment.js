@@ -149,7 +149,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 })
             }
         }
-        // timeline.push(wordTrial);
+        timeline.push(wordTrial);
         trial_number++;
     };
 
