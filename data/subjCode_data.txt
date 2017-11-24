@@ -1,7 +1,0 @@
-subjCode,workerId,assignmentId,hitId,category,expTimer,response,trial_number,rt
-subjCode,workerId,assignmentId,hitId,boot,22.359,,1,20022
-subjCode,workerId,assignmentId,hitId,baseballcards,23.079,,2,707
-subjCode,workerId,assignmentId,hitId,cake,23.526,,3,433
-subjCode,workerId,assignmentId,hitId,bathsuit,23.918,,4,377
-subjCode,workerId,assignmentId,hitId,bowtie,24.31,,5,385
-subjCode,workerId,assignmentId,hitId,basket,24.742,,6,408

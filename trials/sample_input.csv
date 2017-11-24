@@ -1,0 +1,4 @@
+filename,fileType,corectAnswer,choices
+301_1_throw_voc.mov,video,throw,['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have']
+301_1_think_voc.wav,audio,think,['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have']
+301_1_move_voc.mov,video,stay,['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have']

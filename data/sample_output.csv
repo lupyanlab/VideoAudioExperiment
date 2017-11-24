@@ -1,0 +1,4 @@
+workerId,trialNum,filename,fileType,corectAnswer,choices,chosen,isRight,RT
+KJAHSDKJAHSE232	1,301_1_throw_voc.mov,video,throw,['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have'],have,0,4.953
+KJAHSDKJAHSE232	2,301_1_think_voc.wav,audio,think,['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have'],think,1,3.656
+KJAHSDKJAHSE232	3,301_1_move_voc.mov,video,stay,['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have'],stay,1,4.756
