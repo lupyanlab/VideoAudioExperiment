@@ -7,8 +7,6 @@ const csvWriter = require("csv-write-stream");
 const _ = require('lodash');
 const bodyParser = require('body-parser');
 const csv = require('csvtojson');
-const Papa = require('papaparse');
-const readline = require('readline');
 
 let app = express();
 let writer = csvWriter({ sendHeaders: false });
@@ -43,23 +41,17 @@ app.post('/trials', function (req, res) {
   console.log("trials post request received");
 
   let subjCode = req.body.subjCode;
+  let sessionID = req.body.sessionID;
   console.log(req.body);
 
-  // const rl = readline.createInterface({
-  //   input: fs.createReadStream('./trials/'+subjCode+'_trials.txt')
-  // });
-
-  // rl.on('line', function (line) {
-  //   console.log('Line from file:', line.split('\t'));
-  // });
 
   let trials = [];
-  csv({delimiter: 'auto'})
-  .fromFile('./trials/'+subjCode+'_trials.txt ')
+  csv({delimiter: '\t'})
+  .fromFile('./trials/'+sessionID+'.txt')
   .on('json',(jsonObj)=>{
       // combine csv header row and csv line to a json object
       // jsonObj.a ==> 1 or 4
-      console.log(jsonObj);
+      jsonObj.choices = jsonObj.choices.split(',');
       trials.push(jsonObj);
   })
   .on('done',(error)=>{
@@ -67,7 +59,6 @@ app.post('/trials', function (req, res) {
     let questions = _.shuffle(fs.readFileSync('IRQ_questions.txt').toString().replace(/\r/g, '\n').split('\n')).filter((line) => { return line.replace(/ /g, '').length > 0 });
     res.send({ success: true, trials: trials, questions: questions });
   })
-
 })
 
 

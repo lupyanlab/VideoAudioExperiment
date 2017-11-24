@@ -1,5 +1,5 @@
 // Function Call to Run the experiment
-function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
+function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitId) {
     let timeline = [];
 
     // Data that is collected for jsPsych
@@ -65,50 +65,75 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     timeline.push(instructions);
 
     let trial_number = 1;
-    let num_trials = trials.categories.length;
+    let num_trials = trials.length;
     document.trials = trials;
 
     // Pushes each audio trial to timeline
-    for (let category of trials.categories) {
+    for (let trial of trials) {
 
         // Empty Response Data to be sent to be collected
         let response = {
-            subjCode: subjCode,
-            workerId: workerId,
-            assignmentId: assignmentId,
-            hitId: hitId,
-            participantID: participantID,
-            category: category,
+            workerId: subjCode,
+            trialNum: trial_number,
+            filename: trial.filename,
+            fileType: trial.fileType,
+            correctAnswer: trial.corectAnswer,
+            choices: trial.choices,
+            isRight: false,
             expTimer: -1,
-            response: -1,
-            trial_number: trial_number,
+            chosen: -1,
             rt: -1,
         }
-
-        let imagesHTML = '';
-        for (let img of trials.images[category]) {
-            imagesHTML += `<img src="${img}" style="max-width:16%;"/>`
+        let stimHTML = '';
+        if (trial.fileType == 'video') {
+            stimHTML = `
+            <div class="row center-xs center-sm center-md center-lg center-block">
+                <video width="400" controls>
+                    <source src="./stims/videos/${trial.filename}" type="video/mp4">
+                    <source src="./stims/videos/${trial.filename}" type="video/ogg">
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>`;
         }
+        else if (trial.fileType == 'audio') {
+            stimHTML = `
+            <div class="row center-xs center-sm center-md center-lg center-block">
+            <audio controls>
+            <source src="./stims/audios/${trial.filename}" type="audio/wav">
+            <source src="./stims/audios/${trial.filename}" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio>
+            </div>`
+        }
+        // for (let img of trials.images[category]) {
+        //     stimHTML += `<img src="${img}" style="max-width:16%;"/>`
+        // }
 
-        let preamble = `
+        let progress_bar = `
         <canvas width="800px" height="25px" id="bar"></canvas>
         <div class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" style="width: ${trial_number / num_trials * 100}%;"></div>
         </div>
         <h6 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h6>
-        `+ imagesHTML;
+        `+ stimHTML;
 
         let questions = ['<h4>What are these items called?</h4>'];
+        let required = [true];
+        let options = [trial.choices]
 
         // Picture Trial
         let wordTrial = {
-            type: 'survey-text',
-            preamble: preamble,
+            type: 'survey-multi-choice',
+            preamble: progress_bar,
             questions: questions,
+            options: options,
+            required: required,
+            horizontal: true,
 
             on_finish: function (data) {
-                console.log(data.responses);
-                response.response = data.responses.Q0;
+                console.log(JSON.parse(data.responses));
+                data.responses = JSON.parse(data.responses);
+                response.chosen = data.responses.Q0;
                 response.rt = data.rt;
                 response.expTimer = data.time_elapsed / 1000;
 
@@ -141,7 +166,7 @@ function runExperiment(trials, subjCode, workerId, assignmentId, hitId) {
     timeline.push(questionsInstructions);
 
 
-    window.questions = trials.questions;    // allow surveyjs to access questions
+    window.questions = questions;    // allow surveyjs to access questions
     let IRQTrial = {
         type: 'html',
         url: "./IRQ/IRQ.html",

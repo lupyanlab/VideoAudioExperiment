@@ -1,5 +1,0 @@
-filename	fileType	corectAnswer	choices
-gb_cook.wav	audio	throw	['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have']
-ill_water.wav	audio	think	['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have']
-sampleVideo1.mov	video	stay	['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have']
-sampleVideo2.mov	video	stay	['grab', 'throw', 'think', 'move', 'stay', 'see', 'hear', 'smell', 'have']

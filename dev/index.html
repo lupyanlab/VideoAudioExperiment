@@ -21,6 +21,7 @@
     <script src="jspsych-5.0.3/plugins/jspsych-multi-stim-multi-response.js"></script>
     <script src="jspsych-5.0.3/plugins/jspsych-call-function.js"></script>
     <script src="jspsych-5.0.3/plugins/jspsych-survey-text.js"></script>
+    <script src="jspsych-5.0.3/plugins/jspsych-survey-multi-choice.js"></script>
     <script src="jspsych-5.0.3/plugins/jspsych-survey-likert.js"></script>
     <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
     <link href="jspsych-5.0.3/css/jspsych.css" rel="stylesheet" type="text/css"></link>
@@ -38,13 +39,8 @@
     <!-- build:form -->
     
     <form action="" class="form-horizontal">
-        Subject Code: <input id="subjCode" type="text" name="FirstName" value="subjCode" autofocus><br>
-        Number of Trials: <input id="numTrials" type="text" name="trials" value="40"> <br>
-        <label for="select" class="control-label">Start over (Reset):</label>
-        <select name="new" id="reset" style="width:20%">
-            <option value="false">false</option>
-            <option value="true">true</option>
-        </select>
+        Subject Code: <input id="subjCode" type="text" name="subjCode" value="subjCode" autofocus><br>
+        SessionID: <input id="sessionID" type="text" name="sessionID" value="304_1"><br>
         <input type="submit" value="Submit">
     </form>
     <!-- endbuild -->

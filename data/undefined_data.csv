@@ -1,0 +1,12 @@
+workerId,trialNum,filename,fileType,choices,isRight,expTimer,rt
+subjCode,1,gb_cook.wav,audio,"grab,throw,think,move,stay,see,hear,smell,have",false,27.874,26708
+subjCode,2,ill_water.wav,audio,"grab,throw,think,move,stay,see,hear,smell,have",false,32.345,4457
+subjCode,1,gb_cook.wav,audio,"grab,throw,think,move,stay,see,hear,smell,have",false,3.388,2665
+subjCode,1,gb_cook.wav,audio,"grab,throw,think,move,stay,see,hear,smell,have",false,4.316,3061
+subjCode,1,gb_cook.wav,audio,"grab,throw,think,move,stay,see,hear,smell,have",false,4.436,move,3755
+subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,4.889,move,3548
+subjCode,2,ill_water.wav,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,10.518,stay,5618
+subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,8.075,move,7499
+subjCode,2,ill_water.wav,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,14.596,move,6508
+subjCode,3,sampleVideo1.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,20.8,think,6188
+subjCode,4,sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,27.603,stay,6777
