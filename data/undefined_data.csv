@@ -17,3 +17,4 @@ subjCode,4,sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smel
 subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,6.565,think,5918
 subjCode,2,301_2_bear_voc.wav.m4a,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,10.895,think,4313
 subjCode,3,301_1_big_gest.mp4,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,17.389,think,6481
+subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,4.906,smell,3754
