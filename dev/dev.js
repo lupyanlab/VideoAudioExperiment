@@ -10,7 +10,7 @@ $(document).ready(function(){
         // DEFINE workerId, hitId, assignmentId HERE
         //////////////////////////////////////////
         let subjCode = $("#subjCode").val().slice();
-        let sessionID = $("#sessionID").val().slice();
+        let sessionId = $("#sessionId").val().slice();
         let workerId = 'null';
         let assignmentId = 'null';
         let hitId = 'null';
@@ -22,7 +22,7 @@ $(document).ready(function(){
             url: 'http://'+document.domain+':'+PORT+'/trials',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({subjCode, sessionID}),
+            data: JSON.stringify({subjCode, sessionId}),
             success: function (data) {
                 console.log(data);
                 

@@ -41,13 +41,13 @@ app.post('/trials', function (req, res) {
   console.log("trials post request received");
 
   let subjCode = req.body.subjCode;
-  let sessionID = req.body.sessionID;
+  let sessionId = req.body.sessionId;
   console.log(req.body);
 
 
   let trials = [];
   csv({delimiter: ','})
-  .fromFile('./trials/'+sessionID+'.csv')
+  .fromFile('./trials/'+sessionId+'.csv')
   .on('json',(jsonObj)=>{
       // combine csv header row and csv line to a json object
       // jsonObj.a ==> 1 or 4

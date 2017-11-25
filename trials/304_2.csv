@@ -1,0 +1,5 @@
+filename,fileType,corectAnswer,choices
+301_1_big_gest.mp4,video,stay,"grab,throw,think,move,stay,see,hear,smell,have"
+sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have"
+gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have"
+301_2_bear_voc.wav.m4a,audio,think,"grab,throw,think,move,stay,see,hear,smell,have"

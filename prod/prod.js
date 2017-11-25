@@ -13,7 +13,8 @@ $(document).ready(function(){
         // DEFINE workerId, hitId, assignmentId HERE
         //////////////////////////////////////////
         let subjCode = $.urlParam('workerId') || 'unknown';
-        let workerID = 'workerId';
+        let sessionId = $.urlParam('sessionId') || 'unknown';
+        let workerId = 'workerId';
 
         $("#loading").html('<h2 style="text-align:center;">Loading trials... please wait.</h2> </br> <div  class="col-md-2 col-md-offset-5"><img src="img/preloader.gif"></div>')
         
@@ -21,7 +22,7 @@ $(document).ready(function(){
             url: 'http://'+document.domain+':'+PORT+'/trials',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({subjCode, sessionID}),
+            data: JSON.stringify({subjCode, sessionId}),
             success: function (data) {
                 console.log(data);
                 
