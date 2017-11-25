@@ -15,6 +15,8 @@ $(document).ready(function(){
         let subjCode = $.urlParam('workerId') || 'unknown';
         let sessionId = $.urlParam('sessionId') || 'unknown';
         let workerId = 'workerId';
+        let assignmentId = 'assignmentId';
+        let hitId = 'hitId';
 
         $("#loading").html('<h2 style="text-align:center;">Loading trials... please wait.</h2> </br> <div  class="col-md-2 col-md-offset-5"><img src="img/preloader.gif"></div>')
         
