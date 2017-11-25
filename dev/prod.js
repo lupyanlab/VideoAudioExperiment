@@ -28,7 +28,7 @@ $(document).ready(function(){
             success: function (data) {
                 console.log(data);
                 
-                
+                $('#loading').remove();
                 // jsPsych.pluginAPI.preloadImages(images, function(){}); 
                 runExperiment(data.trials, subjCode, data.questions, workerId, assignmentId, hitId);
     
