@@ -15,3 +15,7 @@
       height:136.97px;  
     z-index:20;
 }
+
+#audio-placeholder {
+        -webkit-filter: invert(0%);
+}

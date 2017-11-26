@@ -96,7 +96,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
             </div>
             <br>
             <div class="row center-xs center-sm center-md center-lg center-block">
-                <a class="btn btn-default" onclick="play()"><i class="fa fa-play fa-3x" aria-hidden="true"></i></a>
+                <a id="play" class="btn btn-default" onclick="play()"><i class="fa fa-play fa-3x" aria-hidden="true"></i></a>
             </div>
             <script>
                 document.plays = 0;
@@ -106,7 +106,14 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 }
                 media.onplay = function() {
                     document.plays++;
+                    $('#play').addClass('disabled');
                 };
+                media.ontimeupdate = function() {
+                    console.log(media.currentTime/media.duration*100)
+                }
+                media.onended = function() {
+                    $('#play').removeClass('disabled');
+                }
             </script>`;
         }
         else if (trial.fileType == 'audio') {
@@ -120,7 +127,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
             </div>
             <br>
             <div class="row center-xs center-sm center-md center-lg center-block">
-                <a class="btn btn-default" onclick="play()"><i class="fa fa-play fa-3x" aria-hidden="true"></i></a>
+                <a id="play" class="btn btn-default" onclick="play()"><i class="fa fa-play fa-3x" aria-hidden="true"></i></a>
             </div>
             <script>
                 document.plays = 0;
@@ -130,7 +137,14 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 }
                 media.onplay = function() {
                     document.plays++;
+                    $('#play').addClass('disabled');
                 };
+                media.ontimeupdate = function() {
+                    console.log(media.currentTime/media.duration*100)
+                }
+                media.onended = function() {
+                    $('#play').removeClass('disabled');
+                }
             </script>`
         }
         // for (let img of trials.images[category]) {
