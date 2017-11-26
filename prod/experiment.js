@@ -82,39 +82,54 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
             expTimer: -1,
             chosen: -1,
             rt: -1,
+            replays: -1
         }
         let stimHTML = '';
         if (trial.fileType == 'video') {
             stimHTML = `
             <div class="row center-xs center-sm center-md center-lg center-block">
-                <video width="400" controls>
+                <video id="stim" style="max-width:640px;max-height:356px;" controls>
                     <source src="./stims/videos/${trial.filename}" type="video/mp4">
                     <source src="./stims/videos/${trial.filename}" type="video/ogg">
                     Your browser does not support HTML5 video.
                 </video>
-            </div>`;
+            </div>
+            <script>
+                document.replays = 0;
+                var media = document.getElementById("stim");
+                media.onplay = function() {
+                    document.replays++;
+                };
+            </script>`;
         }
         else if (trial.fileType == 'audio') {
             stimHTML = `
             <div class="row center-xs center-sm center-md center-lg center-block">
-            <audio controls>
-            <source src="./stims/audios/${trial.filename}" type="audio/wav">
-            <source src="./stims/audios/${trial.filename}" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
-            </div>`
+                <audio id="stim" style="max-width:640px;max-height:356px;" controls>
+                    <source src="./stims/audios/${trial.filename}" type="audio/wav">
+                    <source src="./stims/audios/${trial.filename}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            <script>
+                document.replays = 0;
+                var media = document.getElementById("stim");
+                media.onplay = function() {
+                    document.replays++;
+                };
+            </script>`
         }
         // for (let img of trials.images[category]) {
         //     stimHTML += `<img src="${img}" style="max-width:16%;"/>`
         // }
 
-        let progress_bar = `
+        let html = `
         <canvas width="800px" height="25px" id="bar"></canvas>
         <div class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" style="width: ${trial_number / num_trials * 100}%;"></div>
         </div>
         <h6 style="text-align:center;">Trial ${trial_number} of ${num_trials}</h6>
-        `+ stimHTML;
+        `+ stimHTML + ``;
 
         let questions = ['<h4>Which of the following words best describes the above?</h4>'];
         let required = [true];
@@ -123,7 +138,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
         // Picture Trial
         let wordTrial = {
             type: 'survey-multi-choice',
-            preamble: progress_bar,
+            preamble: html,
             questions: questions,
             options: options,
             required: required,
@@ -136,6 +151,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 response.rt = data.rt;
                 response.expTimer = data.time_elapsed / 1000;
                 response.isRight = response.chosen == trial.correctAnswer;
+                response.replays = document.replays;
 
                 // POST response data to server
                 $.ajax({
@@ -206,12 +222,12 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                     url: 'http://' + document.domain + ':' + PORT + '/not_play',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({subjCode, response: data.responses.Q0}),
+                    data: JSON.stringify({ subjCode, response: data.responses.Q0 }),
                     success: function () {
                     }
                 })
             }
-            
+
         }
     }
     timeline.push(didNotPlayQuestionTrial);
