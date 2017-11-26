@@ -88,15 +88,22 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
         if (trial.fileType == 'video') {
             stimHTML = `
             <div class="row center-xs center-sm center-md center-lg center-block">
-                <video id="stim" style="max-width:640px;max-height:356px;" controls>
+                <video id="stim" style="max-width:640px;max-height:356px;">
                     <source src="./stims/videos/${trial.filename}" type="video/mp4">
                     <source src="./stims/videos/${trial.filename}" type="video/ogg">
                     Your browser does not support HTML5 video.
                 </video>
             </div>
+            <br>
+            <div class="row center-xs center-sm center-md center-lg center-block">
+                <a class="btn btn-default" onclick="play()"><i class="fa fa-play fa-3x" aria-hidden="true"></i></a>
+            </div>
             <script>
                 document.plays = 0;
                 var media = document.getElementById("stim");
+                function play() {
+                    media.play();
+                }
                 media.onplay = function() {
                     document.plays++;
                 };
@@ -105,15 +112,22 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
         else if (trial.fileType == 'audio') {
             stimHTML = `
             <div class="row center-xs center-sm center-md center-lg center-block">
-                <audio id="stim" style="max-width:640px;max-height:356px;" controls>
+                <audio id="stim" style="max-width:640px;max-height:356px;">
                     <source src="./stims/audios/${trial.filename}" type="audio/wav">
                     <source src="./stims/audios/${trial.filename}" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
             </div>
+            <br>
+            <div class="row center-xs center-sm center-md center-lg center-block">
+                <a class="btn btn-default" onclick="play()"><i class="fa fa-play fa-3x" aria-hidden="true"></i></a>
+            </div>
             <script>
                 document.plays = 0;
                 var media = document.getElementById("stim");
+                function play() {
+                    media.play();
+                }
                 media.onplay = function() {
                     document.plays++;
                 };
