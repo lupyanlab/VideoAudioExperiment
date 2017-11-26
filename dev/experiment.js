@@ -82,7 +82,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
             expTimer: -1,
             chosen: -1,
             rt: -1,
-            replays: -1
+            plays: -1
         }
         let stimHTML = '';
         if (trial.fileType == 'video') {
@@ -95,10 +95,10 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 </video>
             </div>
             <script>
-                document.replays = 0;
+                document.plays = 0;
                 var media = document.getElementById("stim");
                 media.onplay = function() {
-                    document.replays++;
+                    document.plays++;
                 };
             </script>`;
         }
@@ -112,10 +112,10 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 </audio>
             </div>
             <script>
-                document.replays = 0;
+                document.plays = 0;
                 var media = document.getElementById("stim");
                 media.onplay = function() {
-                    document.replays++;
+                    document.plays++;
                 };
             </script>`
         }
@@ -151,7 +151,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 response.rt = data.rt;
                 response.expTimer = data.time_elapsed / 1000;
                 response.isRight = response.chosen == trial.correctAnswer;
-                response.replays = document.replays;
+                response.plays = document.plays;
 
                 // POST response data to server
                 $.ajax({
