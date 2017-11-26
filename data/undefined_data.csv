@@ -63,3 +63,7 @@ subjCode,1,301_1_big_gest.mp4,video,stay,"grab,throw,think,move,stay,see,hear,sm
 subjCode,2,sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,5.039,stay,1619,0
 subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,22.043,see,21396,3
 subjCode,2,301_2_bear_voc.wav.m4a,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,24.336,see,2228,0
+subjCode,1,gb_cook.wav,audio,throw,"grab,throw,think,move,stay,see,hear,smell,have",false,11.474,stay,10780,2
+subjCode,2,301_2_bear_voc.wav.m4a,audio,think,"grab,throw,think,move,stay,see,hear,smell,have",false,17.416,stay,5922,1
+subjCode,3,301_1_big_gest.mp4,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,147.587,stay,130140,3
+subjCode,4,sampleVideo2.mov,video,stay,"grab,throw,think,move,stay,see,hear,smell,have",false,214.889,stay,67272,4

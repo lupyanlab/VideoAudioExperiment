@@ -108,9 +108,6 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                     document.plays++;
                     $('#play').addClass('disabled');
                 };
-                media.ontimeupdate = function() {
-                    console.log(media.currentTime/media.duration*100)
-                }
                 media.onended = function() {
                     $('#play').removeClass('disabled');
                 }
@@ -119,6 +116,7 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
         else if (trial.fileType == 'audio') {
             stimHTML = `
             <div class="row center-xs center-sm center-md center-lg center-block">
+                <img id="audio-placeholder" src="img/audio.png" width="640" height=356" />
                 <audio id="stim" style="max-width:640px;max-height:356px;">
                     <source src="./stims/audios/${trial.filename}" type="audio/wav">
                     <source src="./stims/audios/${trial.filename}" type="audio/mpeg">
@@ -138,11 +136,10 @@ function runExperiment(trials, subjCode, questions, workerId, assignmentId, hitI
                 media.onplay = function() {
                     document.plays++;
                     $('#play').addClass('disabled');
+                    $('#audio-placeholder').css('-webkit-filter', 'invert(20%)');
                 };
-                media.ontimeupdate = function() {
-                    console.log(media.currentTime/media.duration*100)
-                }
                 media.onended = function() {
+                    $('#audio-placeholder').css('-webkit-filter', 'invert(0%)');
                     $('#play').removeClass('disabled');
                 }
             </script>`
