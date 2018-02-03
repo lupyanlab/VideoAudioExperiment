@@ -69,7 +69,7 @@ app.post('/data', function (req, res) {
   // Parses the trial response data to csv
   let response = req.body;
   console.log(response);
-  let path = 'data/' + response.subjCode + '_data.csv';
+  let path = 'data/' + response.workerId + '_data.csv';
   let headers = Object.keys(response);
   if (!fs.existsSync(path))
     writer = csvWriter({ headers: headers });
